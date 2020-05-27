@@ -11,7 +11,7 @@ function App() {
     fetch('/api/test')
       .then(res => res.json()) // Gets only the json from the response
       .then(({answer}) => console.log(answer));
-    const ENDPOINT = 'http://127.0.0.1:5000';
+    const ENDPOINT = 'http://localhost:5000';
     const socket = socketIOClient(ENDPOINT);
 
     socket.on('user joined', data => {
