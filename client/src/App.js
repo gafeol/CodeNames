@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import socketIOClient from 'socket.io-client';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  var username = useState("");
 
   useEffect(() => {
     // Testing API request
     fetch('/api/test')
       .then(res => res.json()) // Gets only the json from the response
       .then(({answer}) => console.log(answer));
+    const ENDPOINT = 'http://127.0.0.1:5000';
+    const socket = socketIOClient(ENDPOINT);
+
+    socket.on('user joined', data => {
+      console.log("a new user has joined!");
+    });
   });
   return (
     <div className="App">
