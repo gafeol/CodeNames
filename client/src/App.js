@@ -1,40 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
-import logo from './logo.svg';
+import Chat from './Chat.js'
 import './App.css';
 
 function App() {
-  var username = useState("");
-
+  const ENDPOINT = window.location.href;
+  const socket = socketIOClient(ENDPOINT);
   useEffect(() => {
-    // Testing API request
-    fetch('/api/test')
-      .then(res => res.json()) // Gets only the json from the response
-      .then(({answer}) => console.log(answer));
-    const ENDPOINT = window.location.href;
-    console.log("Endpoint eh "+ ENDPOINT);
-    const socket = socketIOClient(ENDPOINT);
-
     socket.on('user joined', data => {
       console.log("a new user has joined!");
     });
   });
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> CodeName </h1>
+      <Chat/>
     </div>
   );
 }
