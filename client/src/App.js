@@ -1,20 +1,13 @@
-import React, { useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
-import Chat from './Chat.js'
+import React from 'react';
+import Chat from './chat/Chat.js'
+import Game from './Game.js'
 import './App.css';
 
 function App() {
-  const ENDPOINT = window.location.href;
-  const socket = socketIOClient(ENDPOINT);
-  useEffect(() => {
-    socket.on('user joined', data => {
-      console.log("a new user has joined!");
-    });
-  });
   return (
-    <div className="App">
-      <h1> CodeName </h1>
-      <Chat/>
+    <div className="body">
+      <Game />
+      <Chat />
     </div>
   );
 }

@@ -20,17 +20,23 @@ app.get('*', (req, res) => {
 });
 
 io.on('connection', socket => {
-    console.log("Client connected!");
+    var newUser = true;
     socket.on('add user', username => {
-        socket.username = username;
-    });
-    socket.broadcast.emit('user joined', {
-        username: socket.username,
+        if(!newUser) return;
+        newUser = false;
+        console.log("Client connected!");
+
+        // TODO: request username
+        //socket.username = username;
+
+        socket.broadcast.emit('user joined', {
+            username: socket.username,
+        });
     });
     socket.on('message', message => {
-        socket.broadcast.emit('message', {
-            message: message
-        })
+        console.log("recebi message: ");
+        console.log(message);
+        socket.broadcast.emit('message', message);
     })
     socket.on('disconnect', () => {
         console.log("Client disconnected");
