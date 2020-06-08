@@ -1,12 +1,5 @@
 .body{
   display: flex;
   flex-direction: row;
-}
-
-.body > * {
-  flex-grow: 1;
-}
-
-.body > h1 {
-  flex-grow: 3;
+  height: 100vh;
 }

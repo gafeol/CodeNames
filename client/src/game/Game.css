@@ -1,0 +1,14 @@
+.board {
+    display: flex;
+    flex-flow: row wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    align-items: center;
+    margin-bottom: 10px;
+}

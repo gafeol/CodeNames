@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import socketIOClient from 'socket.io-client';
-import { Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core';
+import './Chat.css';
 
 const ENDPOINT = window.location.href;
 const socket = socketIOClient(ENDPOINT);
@@ -33,7 +34,7 @@ function Chat (props) {
     });
 
     return (
-        <div>
+        <div class="chat">
             <ul>
                 { messageHistory }
             </ul>
