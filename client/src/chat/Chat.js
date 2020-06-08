@@ -26,15 +26,13 @@ function Chat (props) {
     }
 
     useEffect(() => {
-        console.log("USE EFFECT ON MESSAGE")
-        socket.on('message', ( message ) => { // being set many times
-            console.log('new message arrived:' + message);
+        socket.on('message', ( message ) => { 
             newMessage(message);
         });
     });
 
     return (
-        <div class="chat">
+        <div className="chat">
             <ul>
                 { messageHistory }
             </ul>

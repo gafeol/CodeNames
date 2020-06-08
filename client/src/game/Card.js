@@ -1,9 +1,9 @@
 import React from 'react';
 import './Card.css';
 
-const Card = () => {
+const Card = (props) => {
     return (
-        <div class='card'> 
+        <div className='card'> 
             <p> card </p>
         </div>
     )

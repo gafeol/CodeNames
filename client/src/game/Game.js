@@ -6,13 +6,13 @@ const Game = (props) => {
     var cardList = [];
 
     for (let i = 0; i < 25; i++) {
-        cardList.push(<Card />)
+        cardList.push(<Card key={i}/>)
     }
 
     return (
-        <div class="game">
+        <div className="game">
             <h1> CodeNames </h1>
-            <div class="board">
+            <div className="board">
                 {cardList}
             </div>
         </div>
