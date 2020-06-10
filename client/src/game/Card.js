@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
 import './Card.css';
 
-const Card = (props) => {
+const Card = ({reveal, color}) => {
+    const realClass = 'card ' + color;
+
+    const [hidden, setHidden] = useState(true);
+
+    const revealCard = () => {
+        if(hidden){
+            setHidden(false);
+            reveal(color);
+        }
+    }
+
     return (
-        <div className='card'> 
-            <p> card </p>
-        </div>
+        <Fragment>
+            {hidden 
+                ? <div className='card' onClick={revealCard}> <p> card </p> </div>
+                : <div className={realClass} onClick={revealCard}> <p> card </p> </div>
+            }
+       </Fragment>
     )
 }
 
