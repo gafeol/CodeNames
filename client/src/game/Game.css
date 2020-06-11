@@ -12,3 +12,10 @@
     align-items: center;
     margin-bottom: 10px;
 }
+
+.stats-bar {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+}
