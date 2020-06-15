@@ -4,7 +4,7 @@ import Card from './Card.js';
 import './Game.css';
 import getWordAt from './Dictionary.js';
 
-const Game = (props) => {
+const Game = () => {
     var [cardList, setCardList] = useState([]);
     var [seed, setSeed] = useState(0);
     var [redWords, setRedWords] = useState(9);
@@ -53,7 +53,6 @@ const Game = (props) => {
             var word = getWordAt(random());
             while(wordList.includes(word))
                 word = getWordAt(random());
-
             newCardList.push(<Card key={i} word={word} color='red' reveal={handleReveal} />)
         }
         setCardList(newCardList);

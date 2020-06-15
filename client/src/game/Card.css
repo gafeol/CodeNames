@@ -3,6 +3,9 @@
     margin: 0.5%;
     width: 19%;
     height: 18%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .red{
