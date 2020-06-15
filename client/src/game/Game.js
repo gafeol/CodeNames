@@ -2,15 +2,16 @@ import React, {useState, useEffect } from 'react';
 import { TextField } from '@material-ui/core';
 import Card from './Card.js';
 import './Game.css';
+import getWordAt from './Dictionary.js';
 
 const Game = (props) => {
-    var cardList = [];
+    var [cardList, setCardList] = useState([]);
     var [seed, setSeed] = useState(0);
     var [redWords, setRedWords] = useState(9);
     var [blueWords, setBlueWords] = useState(8);
     var random;
 
-    const makeRandomGen = () => {
+    const makeRandomGen = (upperLimit = 1, onlyInt = false) => {
         const hash = (x) => {
             var h = 0;
             for(var i=0;i<x.length;i++){
@@ -27,7 +28,11 @@ const Game = (props) => {
             auxSeed++;
             auxSeed *= 3;
             auxSeed %= 1000000009;
-            return x - Math.floor(x);
+            var rndBase = x - Math.floor(x); // 0 - 1 value
+            rndBase *= upperLimit;
+            if(onlyInt)
+                rndBase = Math.floor(rndBase);
+            return rndBase;
         }
     }
 
@@ -40,20 +45,24 @@ const Game = (props) => {
         }
     }
 
-    for (let i = 0; i < 25; i++) {
-        cardList.push(<Card key={i} color='red' reveal={handleReveal}/>)
-    }
-
     useEffect(() => {
-        random = makeRandomGen();
-        console.log("Seed eh "+seed);
-        //so usar com random() agora
+        random = makeRandomGen(10000000, true);
+        var wordList = []
+        var newCardList = [];
+        for (let i = 0; i < 25; i++) {
+            var word = getWordAt(random());
+            while(wordList.includes(word))
+                word = getWordAt(random());
+
+            newCardList.push(<Card key={i} word={word} color='red' reveal={handleReveal} />)
+        }
+        setCardList(newCardList);
     }, [seed])
 
     return (
         <div className="game">
             <h1> CodeNames </h1>
-            <div class="stats-bar">
+            <div className="stats-bar">
                 <p> Red team words: {redWords}</p>
                 <p> Blue team words: {blueWords}</p>
                 <TextField placeholder="seed" 
