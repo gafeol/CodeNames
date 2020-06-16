@@ -3,7 +3,6 @@ import { TextField } from '@material-ui/core';
 import Card from './Card.js';
 import './Game.css';
 import getWordAt from './Dictionary.js';
-import socketIOClient from 'socket.io-client';
 
 const Game = () => {
     var [cardList, setCardList] = useState([]);
