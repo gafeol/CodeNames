@@ -34,9 +34,13 @@ io.on('connection', socket => {
         });
     });
     socket.on('message', message => {
-        console.log("recebi message: ");
-        console.log(message);
+        //console.log("recebi message: ");
+        //console.log(message);
         socket.broadcast.emit('message', message);
+    });
+    socket.on('reveal', p => {
+        //console.log("revealing " + p.cardId + " on seed " + p.seed);
+        socket.broadcast.emit('reveal', p);
     })
     socket.on('disconnect', () => {
         console.log("Client disconnected");

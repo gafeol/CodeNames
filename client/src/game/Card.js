@@ -1,6 +1,10 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import './Card.css';
+import socketIOClient from 'socket.io-client';
+
+const ENDPOINT = window.location.href;
+const socket = socketIOClient(ENDPOINT);
 
 const useStyles = makeStyles({
     strongText: {
@@ -9,7 +13,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Card = ({word, reveal, color}) => {
+const Card = ({id, word, reveal, color, seed}) => {
     const classes = useStyles();
     const realClass = 'card ' + color;
 
@@ -18,13 +22,25 @@ const Card = ({word, reveal, color}) => {
     const revealCard = () => {
         if(hidden){
             setHidden(false);
-            reveal(color);
+            console.log(`emits reveal com ${id} ${color}`)
+            socket.emit('reveal', {
+                'seed': seed,
+                'cardId': id
+            });
         }
     }
 
     useEffect(() => {
         setHidden(true);
     }, [word]);
+
+    useEffect(() => {
+        socket.on('reveal', ({cardId, seed}) => {
+            if(cardId === id)
+            setHidden(false);
+            reveal(color, false);
+        })
+    });
 
     return (
         <Fragment>

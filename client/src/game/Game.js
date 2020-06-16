@@ -3,14 +3,13 @@ import { TextField } from '@material-ui/core';
 import Card from './Card.js';
 import './Game.css';
 import getWordAt from './Dictionary.js';
+import socketIOClient from 'socket.io-client';
 
 const Game = () => {
     var [cardList, setCardList] = useState([]);
     var [seed, setSeed] = useState(0);
     var [redWords, setRedWords] = useState(9);
     var [blueWords, setBlueWords] = useState(8);
-    var random;
-
     const makeRandomGen = (upperLimit = 1, onlyInt = false) => {
         const hash = (x) => {
             var h = 0;
@@ -36,24 +35,40 @@ const Game = () => {
         }
     }
 
-    const handleReveal = (color) => {
-        if(color === 'red'){
-            setRedWords(redWords-1);
+    const updCounter = (colorRevealed) => {
+        if (colorRevealed === 'red') {
+            setRedWords(redWords - 1);
         }
-        else{
-            setBlueWords(blueWords-1);
+        else {
+            setBlueWords(blueWords - 1);
         }
     }
 
+    const shuffleMask = (random) => {
+        var mask = [
+            'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red',
+            'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue',
+            'bomb',
+            'neutral', 'neutral', 'neutral', 'neutral', 'neutral', 'neutral', 'neutral',
+        ];
+        // shuffle
+        for(var i=0;i<mask.length-1;i++){
+            var j = random()%(mask.length - i);
+            [mask[i], mask[j]] = [mask[j], mask[i]];
+        }
+        return mask;
+    }
+
     useEffect(() => {
-        random = makeRandomGen(10000000, true);
+        var random = makeRandomGen(10000000, true);
+        var mask = shuffleMask(random);
         var wordList = []
         var newCardList = [];
         for (let i = 0; i < 25; i++) {
             var word = getWordAt(random());
             while(wordList.includes(word))
                 word = getWordAt(random());
-            newCardList.push(<Card key={i} word={word} color='red' reveal={handleReveal} />)
+            newCardList.push(<Card key={i} id={i} word={word} color={mask[i]} updCounter={updCounter} seed={seed}/>)
         }
         setCardList(newCardList);
     }, [seed])
