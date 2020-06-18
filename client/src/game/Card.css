@@ -18,6 +18,10 @@
     color: white;
 }
 
+.green {
+    background-color: forestgreen;
+}
+
 .bomb{
     background-color: black;
     color: red;

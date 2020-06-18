@@ -42,14 +42,26 @@ const Card = ({id, word, updCounter, color, seed, spymaster}) => {
         })
     });
 
-    return (
-        <Fragment>
-            {hidden 
-                ? <div className='card' onClick={revealCard}> <Typography className={classes.strongText} variant="h5"> {word} </Typography> </div>
-                : <div className={realClass} onClick={revealCard}> <Typography className={classes.strongText} variant="h5">{word} </Typography> </div>
-            }
-       </Fragment>
-    )
+    if(spymaster){
+        return (
+            <Fragment>
+                {hidden
+                    ? <div className={realClass} onClick={revealCard}> <Typography className={classes.strongText} variant="h5"> {word} </Typography> </div>
+                    : <div className='card green' onClick={revealCard}> <Typography className={classes.strongText} variant="h5">{word} </Typography> </div>
+                }
+            </Fragment>
+        )
+    }
+    else {
+        return (
+            <Fragment>
+                {hidden
+                    ? <div className='card' onClick={revealCard}> <Typography className={classes.strongText} variant="h5"> {word} </Typography> </div>
+                    : <div className={realClass} onClick={revealCard}> <Typography className={classes.strongText} variant="h5">{word} </Typography> </div>
+                }
+            </Fragment>
+        )
+    }
 }
 
 export default Card;

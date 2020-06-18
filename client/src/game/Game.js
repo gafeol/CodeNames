@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, FormControlLabel, Switch } from '@material-ui/core';
 import Card from './Card.js';
 import './Game.css';
 import getWordAt from './Dictionary.js';
@@ -9,6 +9,7 @@ const Game = () => {
     var [seed, setSeed] = useState(0);
     var [redWords, setRedWords] = useState(9);
     var [blueWords, setBlueWords] = useState(8);
+    var [spymaster, setSpymaster] = useState(false);
     const makeRandomGen = (upperLimit = 1, onlyInt = false) => {
         const hash = (x) => {
             var h = 0;
@@ -67,20 +68,26 @@ const Game = () => {
             var word = getWordAt(random());
             while(wordList.includes(word))
                 word = getWordAt(random());
-            newCardList.push(<Card key={i} id={i} word={word} color={mask[i]} updCounter={updCounter} seed={seed}/>)
+            newCardList.push(<Card key={i} id={i} word={word} color={mask[i]} updCounter={updCounter} seed={seed} spymaster={spymaster}/>)
         }
         setCardList(newCardList);
-    }, [seed])
+    }, [seed, spymaster])
 
     return (
         <div className="game">
             <h1> CodeNames </h1>
+            <h2>Spymaster eh {JSON.stringify(spymaster)}</h2>
             <div className="stats-bar">
                 <p> Red team words: {redWords}</p>
                 <p> Blue team words: {blueWords}</p>
                 <TextField placeholder="seed" 
                     value={seed}
                     onChange={e => setSeed(e.target.value)}/>
+                <FormControlLabel
+                    control={<Switch color="primary" onClick={() => setSpymaster(!spymaster)}/>}
+                    label="Spymaster"
+                    labelPlacement="top"
+                />
             </div>
             <div className="board">
                 {cardList}
