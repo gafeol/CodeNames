@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Card = ({id, word, reveal, color, seed}) => {
+const Card = ({id, word, updCounter, color, seed, spymaster}) => {
     const classes = useStyles();
     const realClass = 'card ' + color;
 
@@ -38,7 +38,7 @@ const Card = ({id, word, reveal, color, seed}) => {
         socket.on('reveal', ({cardId, seed}) => {
             if(cardId === id)
             setHidden(false);
-            reveal(color, false);
+            updCounter(color);
         })
     });
 
