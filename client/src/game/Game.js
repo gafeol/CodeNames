@@ -6,7 +6,7 @@ import getWordAt from './Dictionary.js';
 
 const Game = () => {
     var [cardList, setCardList] = useState([]);
-    var [seed, setSeed] = useState(0);
+    var [seed, setSeed] = useState("seed");
     var [redWords, setRedWords] = useState(9);
     var [blueWords, setBlueWords] = useState(8);
     var [spymaster, setSpymaster] = useState(false);
@@ -76,7 +76,6 @@ const Game = () => {
     return (
         <div className="game">
             <h1> CodeNames </h1>
-            <h2>Spymaster eh {JSON.stringify(spymaster)}</h2>
             <div className="stats-bar">
                 <p> Red team words: {redWords}</p>
                 <p> Blue team words: {blueWords}</p>
