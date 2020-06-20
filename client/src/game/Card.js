@@ -27,6 +27,7 @@ const Card = ({id, word, updCounter, color, seed, spymaster}) => {
                 'seed': seed,
                 'cardId': id
             });
+            updCounter(color);
         }
     }
 

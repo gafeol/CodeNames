@@ -35,15 +35,6 @@ const Game = () => {
         }
     }
 
-    const updCounter = (colorRevealed) => {
-        if (colorRevealed === 'red') {
-            setRedWords(redWords - 1);
-        }
-        else {
-            setBlueWords(blueWords - 1);
-        }
-    }
-
     const shuffleMask = (random) => {
         var mask = [
             'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red',
@@ -53,25 +44,38 @@ const Game = () => {
         ];
         // shuffle
         for(var i=0;i<mask.length-1;i++){
-            var j = random()%(mask.length - i);
+            var j = i + random()%(mask.length - i);
             [mask[i], mask[j]] = [mask[j], mask[i]];
         }
         return mask;
     }
 
     useEffect(() => {
+        const updCounter = (colorRevealed) => {
+            if (colorRevealed === "red") setRedWords(redWords - 1);
+            else if (colorRevealed === "blue") setBlueWords(blueWords - 1);
+        };
         var random = makeRandomGen(10000000, true);
         var mask = shuffleMask(random);
         var wordList = []
         var newCardList = [];
         for (let i = 0; i < 25; i++) {
             var word = getWordAt(random());
-            while(wordList.includes(word))
-                word = getWordAt(random());
-            newCardList.push(<Card key={i} id={i} word={word} color={mask[i]} updCounter={updCounter} seed={seed} spymaster={spymaster}/>)
+            while (wordList.includes(word)) word = getWordAt(random());
+			newCardList.push(
+				<Card
+					key={i}
+					id={i}
+					word={word}
+					color={mask[i]}
+					updCounter={updCounter}
+					seed={seed}
+					spymaster={spymaster}
+				/>
+			);
         }
         setCardList(newCardList);
-    }, [seed, spymaster])
+    }, [seed, spymaster, blueWords, redWords])
 
     return (
         <div className="game">
