@@ -1,3 +1,5 @@
 .chat {
     min-width: 20%;
+    overflow: auto;
+    height: 85%;
 }

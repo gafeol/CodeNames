@@ -32,10 +32,12 @@ function Chat (props) {
     });
 
     return (
-        <div className="chat">
-            <ul>
-                { messageHistory }
-            </ul>
+        <div>
+            <div className="chat">
+                <ul>
+                    { messageHistory }
+                </ul>
+            </div>
             <form autoComplete='off' onSubmit={onFormSubmit}>
                 <TextField
                     id='message-box'
