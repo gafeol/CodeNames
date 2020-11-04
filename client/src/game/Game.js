@@ -10,6 +10,7 @@ const Game = () => {
     var [redWords, setRedWords] = useState(9);
     var [blueWords, setBlueWords] = useState(8);
     var [spymaster, setSpymaster] = useState(false);
+    var [gameOver, setGameOver] = useState(false);
     const makeRandomGen = (upperLimit = 1, onlyInt = false) => {
         const hash = (x) => {
             var h = 0;
@@ -52,8 +53,10 @@ const Game = () => {
 
     useEffect(() => {
         const updCounter = (colorRevealed) => {
+            if (gameOver) return ;
             if (colorRevealed === "red") setRedWords(redWords - 1);
             else if (colorRevealed === "blue") setBlueWords(blueWords - 1);
+            else if (colorRevealed === "bomb") setGameOver(true);
         };
         var random = makeRandomGen(10000000, true);
         var mask = shuffleMask(random);
@@ -92,6 +95,9 @@ const Game = () => {
                     labelPlacement="top"
                 />
             </div>
+            {gameOver && <h2 className="game-over">
+                Game over!
+            </h2>}
             <div className="board">
                 {cardList}
             </div>
